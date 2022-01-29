@@ -1,8 +1,19 @@
 (function() {
   var images = [];
+
+  for(var i = 0; i < 16; i++){
+    var img = {
+      src: "images/" + i + ".jpg",
+      id: i%8
+    };
+    images.push(img);
+  }
+
   startGame();
 
   function startGame(){
+var frontFaces = document.getElementsByClassName("front");
+
     for(var i = 0; i < 16; i++){
       var card = document.querySelector('#card' + i);
       console.log(card);
@@ -19,6 +30,10 @@
     } 
     
     card.addEventListener("click", flipcard, false);
+
+    frontFaces[i].style.background = "url('"+ images[i].src +"')";
+    frontFaces[i].setAttribute("id", images[i].id);
+    console.log(frontFaces[i].id)
 
     }
   }

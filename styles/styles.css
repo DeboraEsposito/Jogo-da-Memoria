@@ -43,7 +43,6 @@ body {
 }
 
 .front {
-  background-image: url("../images/4.jpg");
   transform: rotateY(-180deg);
 }
 
