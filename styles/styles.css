@@ -5,6 +5,9 @@
 
 body {
   background-color: rgb(27, 26, 26);
+  text-align: center;
+  margin-top: 80px;
+
 }
 
 #container {
@@ -52,4 +55,30 @@ body {
 
 .card:hover {
   box-shadow: inset 0 0 1em gold, 0 0 1em red;
+}
+
+.face.flipped.match {
+  box-shadow: inset 0 0 1em rgb(0, 255, 21), 0 0 1em rgb(0, 255, 64);
+}
+
+#modalGameOver {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: -2;
+}
+
+#imgGameOver {
+  margin-top: 120px;
+}
+
+#imgMatchSign {
+  position: relative;
+  top: 250px;
+  transition-property: top, opacity;
+  transition-duration: 1.5s;
+  opacity: 1;
+  z-index: -1;
 }

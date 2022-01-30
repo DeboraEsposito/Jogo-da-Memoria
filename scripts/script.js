@@ -1,7 +1,14 @@
 (function() {
-  var images = [];
 
+  var images = [];
+  
+  var imgMatchSign = document.queryCommandIndeterm("#imgMatchSign");
+
+  var modalGameOver = document.querySelector("#modalGameOver");
+  
   var flippedCards = [];
+
+  var matches = 0;  
 
   for(var i = 0; i < 16; i++){
     var img = {
@@ -14,16 +21,21 @@
   startGame();
 
   function startGame(){
-
+    
     flippedCards = [];
+
+    matches = 0;
 
     images = randomSort(images);
 
-var frontFaces = document.getElementsByClassName("front");
+    var frontFaces = document.getElementsByClassName("front");
+    var backFaces = document.getElementsByClassName("back");
 
     for(var i = 0; i < 16; i++){
+      frontFaces[i].classList.remove("match","flipped");
+      backFaces[i].classList.remove("match","flipped");
+
       var card = document.querySelector('#card' + i);
-      console.log(card);
       if(i === 0 || i === 8) {
         card.style.left = 5 + "px";
       }else{
@@ -42,6 +54,11 @@ var frontFaces = document.getElementsByClassName("front");
     frontFaces[i].setAttribute("id", images[i].id);
     
     }
+
+    modalGameOver.style.zIndex = -2;
+    modalGameOver.removeEventListener('click', function () {
+      startGame();
+     }, false);
   }
 
   function randomSort(oldArray){
@@ -57,8 +74,7 @@ var frontFaces = document.getElementsByClassName("front");
     }
 
     return newArray;
-    //console.log(Math.floor(Math.random()* 11));
-    
+        
   }
 
   function flipcard(){
@@ -69,10 +85,32 @@ var frontFaces = document.getElementsByClassName("front");
       if(faces[0].classList.length > 2){
         return;
       }
+
       faces[0].classList.toggle("flipped");
       faces[1].classList.toggle("flipped");
-      
+
       flippedCards.push(this);
+
+      if(flippedCards.length === 2){
+
+        if(flippedCards[0].childNodes[3].id === flippedCards[1].childNodes[3].id){
+
+          flippedCards[0].childNodes[1].classList.toggle("match");
+          flippedCards[0].childNodes[3].classList.toggle("match");
+          flippedCards[1].childNodes[1].classList.toggle("match");
+          flippedCards[1].childNodes[3].classList.toggle("match");
+
+          flippedCards = [];
+
+          matches++;
+          
+
+          if(matches >= 8){
+            gameOver();
+          }
+        }
+      }
+
     } else {
       flippedCards[0].childNodes[1].classList.toggle("flipped");
       flippedCards[0].childNodes[3].classList.toggle("flipped");
@@ -80,7 +118,16 @@ var frontFaces = document.getElementsByClassName("front");
       flippedCards[1].childNodes[3].classList.toggle("flipped");
 
       flippedCards = [];
+    
     }
     
   }
+
+  function gameOver(){
+    modalGameOver.style.zIndex = "99";
+    modalGameOver.addEventListener('click', function(){
+      startGame();
+    }, false);
+  }
+
 }());
